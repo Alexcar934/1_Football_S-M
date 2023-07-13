@@ -134,7 +134,7 @@ elif opcion == 'Buscador_MV':
                 temporada = st.sidebar.multiselect(
                 "Seleccione el/los años que desees ver reflejados para :" + str(i),
                 options = df_market_returned['Temporada'].unique(),
-                default = [2020,2021,2022])
+                default = [df_market_returned['Temporada'].unique()[1], df_market_returned['Temporada'].unique().max()])
 
 
                 df_seleccion = df_market_returned.query("Temporada == @temporada")
@@ -201,19 +201,27 @@ elif opcion == 'Dashboard':
         edad = df_market['Edad'].unique().tolist() # se crea una lista unica de la columna CALIFICACION
         temporada = df_market['Temporada'].unique().tolist() # se crea una lista unica de la columna EDAD PERSONA ENCUESTADA
 
+
         #Crear un slider para el Valor
 
-        valor_selector = st.slider('Edad persona encuestada:',
-                                min_value = min(valor), #el valor minimo va a ser el valor mas pequeño que encuentre dentro de la columna EDAD PERSONA ENCUESTADA
-                                max_value = max(valor),#el valor maximo va a ser el valor mas grande que encuentre dentro de la columna EDAD PERSONA ENCUESTADA
-                                value = (min(valor),max(valor)))
+        # valor_selector = st.slider('Edad persona encuestada:',
+        #                         min_value = min(valor), #el valor minimo va a ser el valor mas pequeño que encuentre dentro de la columna EDAD PERSONA ENCUESTADA
+        #                         max_value = max(valor),#el valor maximo va a ser el valor mas grande que encuentre dentro de la columna EDAD PERSONA ENCUESTADA
+        #                         value = (min(valor),max(valor)))
         
-        #Crear un slider de edad
+        # #Crear un slider de edad
 
-        edad_selector = st.slider('Edad persona encuestada:',
-                                min_value = min(edad), #el valor minimo va a ser el valor mas pequeño que encuentre dentro de la columna EDAD PERSONA ENCUESTADA
-                                max_value = max(edad),#el valor maximo va a ser el valor mas grande que encuentre dentro de la columna EDAD PERSONA ENCUESTADA
-                                value = (min(edad),max(edad))) #que tome desde el minimo, hasta el maximo
+        # edad_selector = st.slider('Edad persona encuestada:',
+        #                         min_value = min(edad), #el valor minimo va a ser el valor mas pequeño que encuentre dentro de la columna EDAD PERSONA ENCUESTADA
+        #                         max_value = max(edad),#el valor maximo va a ser el valor mas grande que encuentre dentro de la columna EDAD PERSONA ENCUESTADA
+        #                         value = (min(edad),max(edad))) #que tome desde el minimo, hasta el maximo
+
+
+        edad_mínima = st.selectbox('Edad:',
+                                     edad)
+        
+        edad_máxima = st.selectbox('Edad Máxima:',
+                                     edad)
 
 
         #crear multiselectores
@@ -221,15 +229,30 @@ elif opcion == 'Dashboard':
         temporada_selector = st.multiselect('Temporada:',
                                         temporada,
                                         default = 2022)
+                                        
 
-        mask = (df_market['Valor de mercado'].between(*valor_selector))&\
-               (df_market['Edad'].between(*edad_selector))&\
+        #(df_market['Valor de mercado'].between(*valor_selector))&\
+        mask = (df_market['Edad'].between(edad_mínima,(edad_máxima+1)))&\
                 (df_market['Temporada'].isin(temporada_selector))
         
         numero_resultados = df_market[mask].shape[0] ##number of availables rows
         st.markdown(f'*Resultados Disponibles:{numero_resultados}*') ## sale como un titulo que dice cuantos resultados tiene para ese filtro
 
-        
+        dif_valor_jugador = px.bar(
+        df_market[mask].head(25),
+        x = 'Nombre',
+        y="Diferencia_Valor", 
+        orientation= "v", 
+        title = "<b>Aumento del Valor de Mercado </b>", 
+        color_discrete_sequence = ["#FFA500"] * len(df_market[mask]),
+        template='plotly_white', 
+        hover_data= ['Nombre','Temporada','Club_Valor'],
+        text= 'Diferencia_Valor')
+
+        st.plotly_chart(dif_valor_jugador,  use_container_width = True)
+
+        with st.expander("Ver el DataFrame"):
+                st.dataframe(df_market[mask])
 
 
 else:
