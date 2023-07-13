@@ -6,11 +6,13 @@ Este proyecto tiene como objetivo ayudar a un jugador de fútbol profesional a t
 ## Equipos destacados
 En el año 2022, los equipos que encabezaron la lista de aquellos que más aumentaron el valor de su plantilla fueron:
 
-1. Equipo A
-2. Equipo B
-3. Equipo C
+1. Arsenal FC
+2. Brighton & Hove Albion
+3. SL Benfica
+4. Napolés
+5. Ajax 
 
-Estos equipos han demostrado un sólido crecimiento en el valor de sus jugadores, lo que los convierte en opciones atractivas para el jugador de fútbol profesional.
+Estos equipos han demostrado un sólido crecimiento en el valor de sus jugadores, lo que los convierte en opciones atractivas para el jugador de fútbol profesional en la actualidad
 
 ## Metodología
 El proyecto se desarrolló siguiendo los siguientes pasos:
