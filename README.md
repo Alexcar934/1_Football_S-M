@@ -12,7 +12,7 @@ En el año 2022, los equipos que encabezaron la lista de aquellos que más aumen
 4. Napolés
 5. Ajax 
 
-Estos equipos han demostrado un sólido crecimiento en el valor de sus jugadores, lo que los convierte en opciones atractivas para el jugador de fútbol profesional en la actualidad
+Estos equipos han demostrado un sólido crecimiento en el valor de sus jugadores, lo que los convierte en opciones atractivas para el jugador de fútbol profesional en la actualidad.
 
 ## Metodología
 El proyecto se desarrolló siguiendo los siguientes pasos:
